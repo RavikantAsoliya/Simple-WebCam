@@ -61,7 +61,7 @@
     <StartupObject>Simple_WebCam.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B532E24BCDC09AD8A2A59340A34BACE668269AF9</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>F010E9CF0755D9777956FD2999635AE9CE6F78EA</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>Simple WebCam_TemporaryKey.pfx</ManifestKeyFile>
@@ -70,7 +70,7 @@
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AForge.Video, Version=2.2.5.0, Culture=neutral, PublicKeyToken=cbfb6e07d173c401, processorArchitecture=MSIL">

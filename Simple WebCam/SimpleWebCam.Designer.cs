@@ -38,9 +38,7 @@
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullScreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.defaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flipCameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.roundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInTaskbarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,19 +89,17 @@
             this.stopToolStripMenuItem,
             this.pinToolStripMenuItem,
             this.fullScreenToolStripMenuItem,
-            this.defaultToolStripMenuItem,
             this.flipCameraToolStripMenuItem,
-            this.customSizeToolStripMenuItem,
             this.roundToolStripMenuItem,
             this.showInTaskbarToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.rightClickMenu.Name = "contextMenuStrip1";
-            this.rightClickMenu.Size = new System.Drawing.Size(159, 224);
+            this.rightClickMenu.Size = new System.Drawing.Size(181, 202);
             // 
             // devicesToolStripMenuItem
             // 
             this.devicesToolStripMenuItem.Name = "devicesToolStripMenuItem";
-            this.devicesToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.devicesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.devicesToolStripMenuItem.Text = "Devices";
             this.devicesToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.DevicesToolStripMenuItem_DropDownItemClicked);
             // 
@@ -111,7 +107,7 @@
             // 
             this.stopToolStripMenuItem.Enabled = false;
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.StopToolStripMenuItem_Click);
             // 
@@ -120,7 +116,7 @@
             this.pinToolStripMenuItem.Checked = true;
             this.pinToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.pinToolStripMenuItem.Name = "pinToolStripMenuItem";
-            this.pinToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.pinToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pinToolStripMenuItem.Text = "Pin";
             this.pinToolStripMenuItem.Click += new System.EventHandler(this.PinToolStripMenuItem_Click);
             // 
@@ -128,38 +124,22 @@
             // 
             this.fullScreenToolStripMenuItem.CheckOnClick = true;
             this.fullScreenToolStripMenuItem.Name = "fullScreenToolStripMenuItem";
-            this.fullScreenToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.fullScreenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fullScreenToolStripMenuItem.Text = "Full Screen";
             this.fullScreenToolStripMenuItem.Click += new System.EventHandler(this.FullScreenToolStripMenuItem_Click);
-            // 
-            // defaultToolStripMenuItem
-            // 
-            this.defaultToolStripMenuItem.Name = "defaultToolStripMenuItem";
-            this.defaultToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.defaultToolStripMenuItem.Text = "Default";
-            this.defaultToolStripMenuItem.Visible = false;
-            this.defaultToolStripMenuItem.Click += new System.EventHandler(this.DefaultToolStripMenuItem_Click);
             // 
             // flipCameraToolStripMenuItem
             // 
             this.flipCameraToolStripMenuItem.Name = "flipCameraToolStripMenuItem";
-            this.flipCameraToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.flipCameraToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.flipCameraToolStripMenuItem.Text = "Flip Camera";
             this.flipCameraToolStripMenuItem.Click += new System.EventHandler(this.FlipCameraToolStripMenuItem_Click);
-            // 
-            // customSizeToolStripMenuItem
-            // 
-            this.customSizeToolStripMenuItem.Name = "customSizeToolStripMenuItem";
-            this.customSizeToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.customSizeToolStripMenuItem.Text = "Custom Size";
-            this.customSizeToolStripMenuItem.Visible = false;
-            this.customSizeToolStripMenuItem.Click += new System.EventHandler(this.CustomSizeToolStripMenuItem_Click);
             // 
             // roundToolStripMenuItem
             // 
             this.roundToolStripMenuItem.CheckOnClick = true;
             this.roundToolStripMenuItem.Name = "roundToolStripMenuItem";
-            this.roundToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.roundToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.roundToolStripMenuItem.Text = "Round Window";
             this.roundToolStripMenuItem.Click += new System.EventHandler(this.RoundToolStripMenuItem_Click);
             // 
@@ -167,14 +147,14 @@
             // 
             this.showInTaskbarToolStripMenuItem.CheckOnClick = true;
             this.showInTaskbarToolStripMenuItem.Name = "showInTaskbarToolStripMenuItem";
-            this.showInTaskbarToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.showInTaskbarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.showInTaskbarToolStripMenuItem.Text = "Show In Taskbar";
             this.showInTaskbarToolStripMenuItem.Click += new System.EventHandler(this.ShowInTaskbarToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -211,8 +191,6 @@
         private System.Windows.Forms.ToolStripMenuItem pinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem flipCameraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem defaultToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem customSizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem roundToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showInTaskbarToolStripMenuItem;
     }

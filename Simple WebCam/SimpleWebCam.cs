@@ -79,223 +79,328 @@ namespace Simple_WebCam
 
         #region Function of ContextMenu ( Right Click Menu )
 
+
         /// <summary>
         /// This will find all camera devices that are connected to your computer via WiFi, cable, or that are integrated.
+        /// Updates the devices menu item with corresponding drop-down items.
         /// </summary>
         private void FindDevices()
         {
+            // Clear the items in the devices combo box
             devicesComboBox.Items.Clear();
 
+            // Get the collection of available video input devices
             devicesList = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+
+            // Check if there are any devices found
             if (devicesList.Count > 0)
             {
+                // Clear the drop-down items in the devices menu item
                 devicesToolStripMenuItem.DropDownItems.Clear();
+
+                // Iterate through each video input device
                 foreach (FilterInfo device in devicesList)
                 {
+                    // Add the device name to the devices combo box
                     devicesComboBox.Items.Add(device.Name);
 
-                    devicesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
-                        new ToolStripMenuItem
-                        {
-                            Name = device.Name + "ToolStripMenuItem",
-                            Text = device.Name,
-                            Size = new Size(270, 34),
-                        }
-                    });
+                    // Create a new drop-down item for the device
+                    var menuItem = new ToolStripMenuItem
+                    {
+                        Name = device.Name + "ToolStripMenuItem",
+                        Text = device.Name,
+                        Size = new Size(270, 34)
+                    };
+
+                    // Add the drop-down item to the devices menu item
+                    devicesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { menuItem });
                 }
             }
         }
 
+
+
+
         /// <summary>
-        /// It will show you all the available devices and then if you click on one of them, your camera will be triggered.
+        /// Sets the selected device based on the clicked item, starts capturing frames, and enables the stop menu item.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DevicesToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            void StartCamera()
-            {
-                if (currentDevice != null)
-                {
-                    currentDevice = new VideoCaptureDevice(devicesList[devicesComboBox.SelectedIndex].MonikerString);
-                    currentDevice.NewFrame += CurrentDevice_NewFrame;
-                    currentDevice.Start();
-                }
-            }
-            string menuname = e.ClickedItem.Text;
-            devicesComboBox.SelectedIndex = devicesComboBox.Items.IndexOf(menuname);
+            // Get the name of the clicked device
+            string deviceName = e.ClickedItem.Text;
+
+            // Set the selected device in the devices combo box
+            devicesComboBox.SelectedIndex = devicesComboBox.Items.IndexOf(deviceName);
+
+            // Create a new VideoCaptureDevice with the selected device's MonikerString
             currentDevice = new VideoCaptureDevice(devicesList[devicesComboBox.SelectedIndex].MonikerString);
+
+            // Disable the devices menu item
             devicesToolStripMenuItem.Enabled = false;
-            StartCamera(); // Start Camera Automatically
+
+            // Subscribe to the NewFrame event of the current device and specify the event handler
+            currentDevice.NewFrame += CurrentDevice_NewFrame;
+
+            // Start capturing frames from the current device
+            currentDevice.Start();
+
+            // Enable the stop menu item
             stopToolStripMenuItem.Enabled = true;
         }
 
-        private void CurrentDevice_NewFrame(object sender, NewFrameEventArgs eventArgs) // Get new Images
+
+
+        /// <summary>
+        /// Clones the captured frame, applies a flip transformation if enabled,
+        /// and sets the resulting image as the display picture box's image.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void CurrentDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
         {
+            // Clone the captured frame to ensure independent image processing
             Bitmap frame = (Bitmap)eventArgs.Frame.Clone();
+
+            // Apply a flip transformation if the flip option is enabled
             if (isFlip)
             {
                 frame.RotateFlip(RotateFlipType.RotateNoneFlipX);
             }
-            displayPictureBox.Image = frame;
 
+            // Set the resulting image as the display picture box's image
+            displayPictureBox.Image = frame;
         }
 
-        private void StopToolStripMenuItem_Click(object sender, EventArgs e) // Stop Camera
+
+
+        /// <summary>
+        /// Stops the current device, removes the event handler for capturing new frames,
+        /// resets the display picture box's image, enables the devices menu item,
+        /// disables the stop menu item, and unchecks all devices in the drop-down menu.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StopToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Check if there is a current device
             if (currentDevice != null)
             {
+                // Stop the current device
                 currentDevice.Stop();
+
+                // Remove the event handler for capturing new frames
                 currentDevice.NewFrame -= CurrentDevice_NewFrame;
             }
-            displayPictureBox.Image = (Image)resources.GetObject("displayPictureBox.Image");
+
+            // Reset the display picture box's image
+            displayPictureBox.Image = resources.GetObject("displayPictureBox.Image") as Image;
+
+            // Enable the devices menu item
             devicesToolStripMenuItem.Enabled = true;
+
+            // Disable the stop menu item
             stopToolStripMenuItem.Enabled = false;
+
+            // Uncheck all devices in the drop-down menu
             foreach (ToolStripMenuItem item in devicesToolStripMenuItem.DropDownItems)
             {
-                //Console.WriteLine(item.Name);
                 item.Checked = false;
             }
         }
 
-        private void PinToolStripMenuItem_Click(object sender, EventArgs e) // For Make Top of the Most Window
+
+
+        /// <summary>
+        /// Toggles the TopMost property of the form based on the checked state of the pin menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PinToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (pinToolStripMenuItem.Checked)
-            {
-                TopMost = false;
-                pinToolStripMenuItem.Checked = false;
-            }
-            else
-            {
-                pinToolStripMenuItem.Checked = true;
-                TopMost = true;
-            }
+            // Toggle the TopMost property of the form based on the checked state of the pin menu item
+            TopMost = pinToolStripMenuItem.Checked = !pinToolStripMenuItem.Checked;
         }
 
-        private void FullScreenToolStripMenuItem_Click(object sender, EventArgs e) // For FullScreen
+
+        /// <summary>
+        /// Sets the appropriate properties and state of the form based on the checked state of the full screen menu item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FullScreenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (fullScreenToolStripMenuItem.Checked)
-            {
-                roundToolStripMenuItem.Checked = false;
-                roundToolStripMenuItem.Enabled = false;
-                WindowState = FormWindowState.Maximized;
-            }
-            else
-            {
-                roundToolStripMenuItem.Checked = false;
-                roundToolStripMenuItem.Enabled = true;
-                WindowState = FormWindowState.Normal;
-            }
+            // Set the checked state of the round menu item to false
+            roundToolStripMenuItem.Checked = false;
+
+            // Enable or disable the round menu item based on the checked state of the full screen menu item
+            roundToolStripMenuItem.Enabled = !fullScreenToolStripMenuItem.Checked;
+
+            // Set the WindowState of the form to Maximized if the full screen menu item is checked, otherwise set it to Normal
+            WindowState = fullScreenToolStripMenuItem.Checked ? FormWindowState.Maximized : FormWindowState.Normal;
         }
 
-        private void DefaultToolStripMenuItem_Click(object sender, EventArgs e) // this function is not working.
-        {
-            Console.WriteLine("This Function is not Working.");
-        }
 
-        private void FlipCameraToolStripMenuItem_Click(object sender, EventArgs e) // To Mirror Camera Image
+        /// <summary>
+        /// Toggles the flip state of the camera image.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FlipCameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Check if the flip camera menu item is checked
             if (flipCameraToolStripMenuItem.Checked)
             {
+                // Set the flip state to true
                 isFlip = true;
+
+                // Uncheck the flip camera menu item
                 flipCameraToolStripMenuItem.Checked = false;
             }
             else
             {
+                // Set the flip state to false
                 isFlip = false;
+
+                // Check the flip camera menu item
                 flipCameraToolStripMenuItem.Checked = true;
             }
         }
 
-        private void ExitToolStripMenuItem_Click(object sender, EventArgs e) // For Exit And Close App 
+
+
+        /// <summary>
+        /// Stops the camera and closes the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StopToolStripMenuItem_Click(sender, e);
-            Close();
+            StopToolStripMenuItem_Click(sender, e); // Stop the camera
+            Close(); // Close the application
         }
 
-        private void CustomSizeToolStripMenuItem_Click(object sender, EventArgs e) // This Function is not working.
-        {
-            Console.WriteLine("This Function is not Working.");
-        }
 
+        /// <summary>
+        /// Toggles the round display mode of the form.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RoundToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Check if the round menu item is checked
             if (roundToolStripMenuItem.Checked)
             {
+                // Create a graphics path for the circular region
                 GraphicsPath path = new GraphicsPath();
                 path.AddEllipse(90, 0, displayPictureBox.Height, displayPictureBox.Height);
+
+                // Set the form's region to the circular region
                 ActiveForm.Region = new Region(path);
-                displayPictureBox.SizeMode = PictureBoxSizeMode.StretchImage; //CenterImage
+
+                // Set the picture box's size mode to stretch image
+                displayPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                // Disable the full screen menu item
                 fullScreenToolStripMenuItem.Checked = fullScreenToolStripMenuItem.Enabled = false;
             }
             else
             {
+                // Set the form's size to the default size
                 ActiveForm.Size = new Size(420, 236);
+
+                // Create a rounded rectangular region
                 Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height, 0, 0));
+
+                // Uncheck the full screen menu item
                 fullScreenToolStripMenuItem.Checked = false;
+
+                // Enable the full screen menu item
                 fullScreenToolStripMenuItem.Enabled = true;
             }
         }
 
+
+        /// <summary>
+        /// Enable and Disable "Show In Taskbar".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowInTaskbarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (showInTaskbarToolStripMenuItem.Checked == true)
-                ShowInTaskbar = true;
-            else
-                ShowInTaskbar = false;
+            // Set the value of the ShowInTaskbar property based on the checked state of the menu item.
+            ShowInTaskbar = showInTaskbarToolStripMenuItem.Checked;
         }
+
 
         #endregion
 
 
         #region  Drag Application
-        private void PanelAsTitleBar_MouseDown(object sender, MouseEventArgs e) // Get App Current Position
+
+        /// <summary>
+        /// Gets the current position of the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PanelAsTitleBar_MouseDown(object sender, MouseEventArgs e)
         {
-            offset.X = e.X;
-            offset.Y = e.Y;
-            mouseDrag = true;
+            offset.X = e.X; // Store the X coordinate of the mouse cursor relative to the panel
+            offset.Y = e.Y; // Store the Y coordinate of the mouse cursor relative to the panel
+            mouseDrag = true; // Enable dragging of the window
         }
 
-        private void PanelAsTitleBar_MouseUp(object sender, MouseEventArgs e) // Change mouseDrag = false
+        /// <summary>
+        /// Changes the mouseDrag flag to false.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PanelAsTitleBar_MouseUp(object sender, MouseEventArgs e)
         {
-            mouseDrag = false;
+            mouseDrag = false; // Disable dragging of the window
         }
 
-        private void PanelAsTitleBar_MouseMove(object sender, MouseEventArgs e) // To Move window in specific location
+        /// <summary>
+        /// Moves the window to a specific location.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PanelAsTitleBar_MouseMove(object sender, MouseEventArgs e)
         {
-            if (mouseDrag == true)
+            if (mouseDrag == true) // Check if dragging is enabled
             {
-                Point currentScreenPosition = PointToScreen(e.Location);
-                Location = new Point(currentScreenPosition.X - offset.X, currentScreenPosition.Y - offset.Y);
+                Point currentScreenPosition = PointToScreen(e.Location); // Get the current position of the mouse cursor on the screen
+                Location = new Point(currentScreenPosition.X - offset.X, currentScreenPosition.Y - offset.Y); // Set the new position of the window based on the mouse movement
             }
         }
+
         #endregion
 
 
+        /// <summary>
+        /// Handles the double-click event on the display picture box to toggle full-screen mode.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DisplayPictureBox_DoubleClick(object sender, EventArgs e)
         {
-            if (roundToolStripMenuItem.Checked)
+            // Check if the roundToolStripMenuItem is not checked
+            if (!roundToolStripMenuItem.Checked)
             {
+                // Toggle the window state between Normal and Maximized based on the state of fullScreenToolStripMenuItem
+                WindowState = fullScreenToolStripMenuItem.Checked ? FormWindowState.Normal : FormWindowState.Maximized;
 
-            }
-            else
-            {
-                if (fullScreenToolStripMenuItem.Checked)
-                {
-                    ActiveForm.WindowState = FormWindowState.Normal;
-                    fullScreenToolStripMenuItem.Checked = false;
-                    roundToolStripMenuItem.Checked = false;
-                    roundToolStripMenuItem.Enabled = true;
-                }
-                else
-                {
-                    ActiveForm.WindowState = FormWindowState.Maximized;
-                    fullScreenToolStripMenuItem.Checked = true;
-                    roundToolStripMenuItem.Checked = false;
-                    roundToolStripMenuItem.Enabled = false;
-                }
+                // Toggle the checked state of fullScreenToolStripMenuItem
+                fullScreenToolStripMenuItem.Checked = !fullScreenToolStripMenuItem.Checked;
+
+                // Enable or disable the roundToolStripMenuItem based on the checked state of fullScreenToolStripMenuItem
+                roundToolStripMenuItem.Enabled = fullScreenToolStripMenuItem.Checked;
             }
         }
+
+
+
 
     }
 }

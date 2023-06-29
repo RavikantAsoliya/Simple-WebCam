@@ -1,0 +1,16 @@
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\bin\Debug\Simple WebCam.exe.config
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\bin\Debug\Simple WebCam.exe.manifest
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\bin\Debug\Simple WebCam.application
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\bin\Debug\Simple WebCam.exe
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\bin\Debug\Simple WebCam.pdb
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.csproj.AssemblyReference.cache
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.csproj.SuggestedBindingRedirects.cache
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple_WebCam.SimpleWebCam.resources
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple_WebCam.Properties.Resources.resources
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.csproj.GenerateResource.cache
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.csproj.CoreCompileInputs.cache
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.exe.manifest
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.application
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.csproj.CopyComplete
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.exe
+D:\Programming Resources\C Sharp\GitHub Projects\New folder\Simple WebCam\obj\Debug\Simple WebCam.pdb
